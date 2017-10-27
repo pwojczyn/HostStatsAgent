@@ -44,7 +44,8 @@ public class Utils {
         Timer time = new Timer();
 
         int delayTime = 1000 * 60 * delayMinutes; // 1000 milliseconds in a second * 60 per minute * the MINUTES variable.
-        time.schedule(task, 0, delayTime);
+        time.schedule(task, 2, delayTime);
+
     }
     public static String executeCommand(String command) {
 

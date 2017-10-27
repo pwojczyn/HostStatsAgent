@@ -5,6 +5,8 @@ import com.pwojczyn.HostStatsAgent.javasysmon.JavaSysMon;
 import com.pwojczyn.HostStatsAgent.javasysmon.LinuxMonitor;
 import lombok.Data;
 
+import java.io.IOException;
+
 /*
 id
 hostId
@@ -30,21 +32,26 @@ public class HostInfo {
     private int userId;
 
     public HostInfo() {
-        String hostname = Utils.executeCommand("hostname");
+        try {
+            String hostname = Utils.executeCommand("hostname");
 
-        JavaSysMon javaSysMon = new JavaSysMon();
+            JavaSysMon javaSysMon = new JavaSysMon();
 
-        this.hostId = Utils.hash(hostname.replace("\n", "")+"@"+javaSysMon.osName());
-        this.hostTitle = hostname.replace("\n", "");
-        this.hostOs = javaSysMon.osName();
-        this.hostMemory = Long.toString(javaSysMon.physical().getTotalBytes()/1000000)+" MB";
-        this.hostDisk = Utils.getTotalDiskSpace();
+            this.hostId = Utils.hash(hostname.replace("\n", "") + "@" + javaSysMon.osName());
+            this.hostTitle = hostname.replace("\n", "");
+            this.hostOs = javaSysMon.osName();
+            this.hostMemory = Long.toString(javaSysMon.physical().getTotalBytes() / 1000000) + " MB";
+            this.hostDisk = Utils.getTotalDiskSpace();
 
 
-        this.hostCpu = javaSysMon.numCpus()+"x"+(javaSysMon.cpuFrequencyInHz() / (1000*1000) + " MHz");
-        this.hostUpdate = Utils.getDataTimeFromSystem();
-        this.hostUptime = JavaSysMon.secsInDaysAndHours(javaSysMon.uptimeInSeconds());
-        this.hostIp = Utils.getHostAddress();
+            this.hostCpu = javaSysMon.numCpus() + "x" + (javaSysMon.cpuFrequencyInHz() / (1000 * 1000) + " MHz");
+            this.hostUpdate = Utils.getDataTimeFromSystem();
+            this.hostUptime = JavaSysMon.secsInDaysAndHours(javaSysMon.uptimeInSeconds());
+            this.hostIp = Utils.getHostAddress();
+        }catch (Exception ex) {
+
+            System.out.println("error running HostInfo " + ex.getMessage());
+        }
     }
 
     public String getHostId() {
