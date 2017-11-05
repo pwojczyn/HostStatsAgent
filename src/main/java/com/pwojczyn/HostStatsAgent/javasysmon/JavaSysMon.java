@@ -89,7 +89,7 @@ public class JavaSysMon implements Monitor {
                     "  CPU frequency: " + monitor.cpuFrequencyInHz() / (1000*1000) + " MHz");
             System.out.println("RAM " + monitor.physical() + "  SWAP " + monitor.swap());
             System.out.println("Sampling CPU usage...");
-            Thread.sleep(500);
+            Thread.sleep(1000);
             System.out.println("CPU Usage: " + monitor.cpuTimes().getCpuUsage(initialTimes));
             System.out.println("\n" + ProcessInfo.header());
             ProcessInfo[] processes = monitor.processTable();
