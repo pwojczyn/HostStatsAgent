@@ -15,8 +15,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,7 +29,7 @@ public class Utils {
             HttpClient httpClient    = HttpClientBuilder.create().build();
             HttpPost post          = new HttpPost(postUrl);
             StringEntity postingString = new StringEntity(gson.toJson(hostInfo));//gson.tojson() converts your pojo to json
-            System.out.println(gson.toJson(hostInfo));
+            //System.out.println(gson.toJson(hostInfo));
             post.setEntity(postingString);
             post.setHeader("Content-type", "application/json");
             postingString = new StringEntity(gson.toJson(hostInfo));
@@ -39,6 +40,26 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public static void postHostData(String postUrl, HostData hostData){
+
+        try {
+            Gson gson          = new Gson();
+            HttpClient httpClient    = HttpClientBuilder.create().build();
+            HttpPost post          = new HttpPost(postUrl);
+            StringEntity postingString = new StringEntity(gson.toJson(hostData));//gson.tojson() converts your pojo to json
+            //System.out.println(gson.toJson(hostData));
+            post.setEntity(postingString);
+            post.setHeader("Content-type", "application/json");
+            postingString = new StringEntity(gson.toJson(hostData));
+            HttpResponse response = httpClient.execute(post);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedOperationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void runTask(TimerTask task, int delayMinutes){
 
         Timer time = new Timer();
@@ -87,10 +108,10 @@ public class Utils {
         return null;
     }
     public static String getDataTimeFromSystem() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formatDateTime = now.format(formatter);
-        return formatDateTime;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp formatDateTime = new Timestamp(System.currentTimeMillis());
+
+        return sdf.format(formatDateTime);
     }
     public static String getHostAddress(){
         InetAddress addr = null;
@@ -148,6 +169,29 @@ return (instance.maxMemory()/mb) +" MB ";
         System.out.println("Space free : " + freeSpace /1024 /1024 + " mb");
         */
         return totalSpace /1024 /1024 + " MB";
+
+    }
+    public static String getFreeDiskSpace(){
+        File file = new File("/");
+        long freeSpace = file.getFreeSpace(); //unallocated / free disk space in bytes.
+        /*
+        long totalSpace = file.getTotalSpace(); //total disk space in bytes.
+        long usableSpace = file.getUsableSpace(); ///unallocated / free disk space in bytes.
+        long freeSpace = file.getFreeSpace(); //unallocated / free disk space in bytes.
+
+        System.out.println(" === Partition Detail ===");
+
+        System.out.println(" === bytes ===");
+        System.out.println("Total size : " + totalSpace + " bytes");
+        System.out.println("Space free : " + usableSpace + " bytes");
+        System.out.println("Space free : " + freeSpace + " bytes");
+
+        System.out.println(" === mega bytes ===");
+        System.out.println("Total size : " + totalSpace /1024 /1024 + " mb");
+        System.out.println("Space free : " + usableSpace /1024 /1024 + " mb");
+        System.out.println("Space free : " + freeSpace /1024 /1024 + " mb");
+        */
+        return freeSpace /1024 /1024 + " MB";
 
     }
 

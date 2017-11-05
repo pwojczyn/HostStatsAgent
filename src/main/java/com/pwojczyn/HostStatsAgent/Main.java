@@ -4,18 +4,24 @@ import com.pwojczyn.HostStatsAgent.javasysmon.JavaSysMon;
 
 public class Main {
     public static void main(String[] args) {
+        String apikey;
         System.out.println("HostStatsAgent 1.0");
-
-        System.out.println(System.getProperty("os.name").toLowerCase());
-
-        try {
-            JavaSysMon.SysMon();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (args.length == 0){
+            // for test only
+            apikey = "bfc6c0979f536fe36745f96f5818d268";
+        }else{
+            apikey=args[0];
         }
 
 
-        Utils.runTask(new HostInfoTask(),1);
+//        try {
+//            JavaSysMon.SysMon();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        Utils.runTask(new HostInfoTask(apikey),5);
     }
 
 
