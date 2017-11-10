@@ -1,11 +1,8 @@
 package com.pwojczyn.HostStatsAgent;
 
-import com.pwojczyn.HostStatsAgent.Utils;
-import com.pwojczyn.HostStatsAgent.javasysmon.JavaSysMon;
-import com.pwojczyn.HostStatsAgent.javasysmon.LinuxMonitor;
-import lombok.Data;
 
-import java.io.IOException;
+import hoststatsdesktop.hoststatsagent.javasysmon.JavaSysMon;
+import lombok.Data;
 
 /*
 id

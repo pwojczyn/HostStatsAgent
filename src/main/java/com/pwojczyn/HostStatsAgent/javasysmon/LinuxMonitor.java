@@ -1,5 +1,4 @@
 package com.pwojczyn.HostStatsAgent.javasysmon;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -150,7 +149,7 @@ public class LinuxMonitor implements Monitor {
 
     public void killProcess(int pid) {
         try {
-            ProcessKiller.DESTROY_PROCESS.invoke(null, new Object[]{new Integer(pid)});
+            ProcessKiller.DESTROY_PROCESS.invoke(null, new Integer(pid));
         } catch (Exception e) {
             throw new RuntimeException("Could not kill process id " + pid, e);
         }
@@ -182,11 +181,10 @@ public class LinuxMonitor implements Monitor {
         static {
             try {
                 Class clazz = Class.forName("java.lang.UNIXProcess");
-                DESTROY_PROCESS = clazz.getDeclaredMethod("destroyProcess", new Class[]{int.class});
+                DESTROY_PROCESS = clazz.getDeclaredMethod("destroyProcess", int.class);
                 DESTROY_PROCESS.setAccessible(true);
             } catch (Exception e) {
-                LinkageError x = new LinkageError("Couldn't get method java.lang.UNIXProcess.destroyProcess(int)");
-                x.initCause(e);
+                LinkageError x = new LinkageError("Couldn't get method java.lang.UNIXProcess.destroyProcess(int)", e);
             }
         }
     }

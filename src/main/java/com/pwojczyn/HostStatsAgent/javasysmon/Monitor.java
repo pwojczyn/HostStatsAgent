@@ -12,21 +12,21 @@ public interface Monitor {
      *
      * @return The operating system name.
      */
-    public String osName();
+    String osName();
 
     /**
      * Get the number of CPU cores.
      *
      * @return The number of CPU cores.
      */
-    public int numCpus();
+    int numCpus();
 
     /**
      * Get the CPU frequency in Hz
      *
      * @return the CPU frequency in Hz
      */
-    public long cpuFrequencyInHz();
+    long cpuFrequencyInHz();
 
     /**
      * How long the system has been up in seconds.
@@ -35,7 +35,7 @@ public interface Monitor {
      *
      * @return The time the system has been up in seconds.
      */
-    public long uptimeInSeconds();
+    long uptimeInSeconds();
 
     /**
      * Gets a snapshot which contains the total amount
@@ -49,7 +49,7 @@ public interface Monitor {
      * CPU has spent idle, in user mode and in kernel mode,
      * in milliseconds.
      */
-    public CpuTimes cpuTimes();
+    CpuTimes cpuTimes();
 
     /**
      * Gets the physical memory installed, and the amount free.
@@ -57,7 +57,7 @@ public interface Monitor {
      * @return An object containing the amount of physical
      * memory installed, and the amount free.
      */
-    public MemoryStats physical();
+    MemoryStats physical();
 
     /**
      * Gets the amount of swap available to the operating system,
@@ -66,7 +66,7 @@ public interface Monitor {
      * @return An object containing the amount of swap available
      * to the system, and the amount free.
      */
-    public MemoryStats swap();
+    MemoryStats swap();
 
     /**
      * Gets the pid of the process that is calling this method
@@ -74,7 +74,7 @@ public interface Monitor {
      *
      * @return The pid of the process calling this method.
      */
-    public int currentPid();
+    int currentPid();
 
     /**
      * Get the current process table. This call returns an array of
@@ -92,5 +92,5 @@ public interface Monitor {
      *
      * @param pid The id of the process to kill
      */
-    public void killProcess(int pid);
+    void killProcess(int pid);
 }
